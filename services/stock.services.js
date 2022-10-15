@@ -1,4 +1,6 @@
+const mongoose = require("mongoose");
 const Stock = require("../models/Stock");
+const ObjectId = mongoose.Types.ObjectId;
 
 exports.getStockService = async (filters, quires) => {
   const stock = await Stock.find(filters)
@@ -17,9 +19,28 @@ exports.createStockService = async (data) => {
   return stock;
 };
 exports.getStockByIdService = async (id) => {
-  const result = await Stock.findOne({ _id: id })
-    .populate("brand.id")
-    .populate("suppliedBy.id");
+  // const result = await Stock.findOne({ _id: id })
+  //   .populate("brand.id")
+  //   .populate("suppliedBy.id");
+
+  const result = await Stock.aggregate([
+    { $match: { _id: ObjectId(id) } },
+    {
+      $project: {
+        name: 1,
+        productId: 1,
+        "brand.name": { $toLower: "$brand.name" },
+      },
+    },
+    {
+      $lookup: {
+        from: "brands",
+        localField: "brand.name",
+        foreignField: "name",
+        as: "brandDetails",
+      },
+    },
+  ]);
   return result;
 };
 // exports.bulkUpdateProductService = async (data) => {
