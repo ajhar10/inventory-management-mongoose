@@ -36,7 +36,7 @@ const stockSchema = mongoose.Schema(
       {
         type: String,
         required: true,
-        validate: [validator.isURL, "Please provide valid url(s)"],
+        // validate: [validator.isURL, "Please provide valid url(s)"],
       },
     ],
     price: {
@@ -46,7 +46,6 @@ const stockSchema = mongoose.Schema(
     },
     quantity: {
       type: Number,
-      required: true,
       min: [0, "Product quantity can't be negative"],
     },
     category: {
@@ -66,7 +65,6 @@ const stockSchema = mongoose.Schema(
     },
     status: {
       type: String,
-      required: true,
       enum: {
         values: ["in-stock", "out-of-stock", "discontinued"],
         message: " status can't be {VALUE} ",

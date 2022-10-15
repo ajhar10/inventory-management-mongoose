@@ -3,9 +3,9 @@ const router = express.Router();
 const {
   getStocks,
   createStock,
-  updateStocks,
-  deleteStock,
+  getStockById,
 } = require("../controllers/stock.controllers");
 
 router.route("/").get(getStocks).post(createStock);
-router.route("/:id").patch(updateStocks).delete(deleteStock);
+router.route("/:id").get(getStockById);
+module.exports = router;

@@ -18,7 +18,6 @@ const stockRoute = require("./routes/stock.route");
 app.use("/api/v1/product", productRoute);
 app.use("/api/v1/brand", brandRoute);
 app.use("/api/v1/category", categoryRoute);
-// app.use("/api/v1/store", brandRoute);
 app.use("/api/v1/supplier", supplierRoute);
 app.use("/api/v1/stock", stockRoute);
 

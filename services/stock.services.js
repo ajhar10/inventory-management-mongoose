@@ -16,14 +16,12 @@ exports.createStockService = async (data) => {
 
   return stock;
 };
-// exports.updateProductByIdService = async (productId, data) => {
-//   const result = await Product.updateOne(
-//     { _id: productId },
-//     { $inc: data },
-//     { runValidators: true }
-//   );
-//   return result;
-// };
+exports.getStockByIdService = async (id) => {
+  const result = await Stock.findOne({ _id: id })
+    .populate("brand.id")
+    .populate("suppliedBy.id");
+  return result;
+};
 // exports.bulkUpdateProductService = async (data) => {
 //   //   const result = await Product.updateMany({ _id: data.ids }, data.data, {
 //   //     runValidators: true,

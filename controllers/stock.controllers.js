@@ -1,11 +1,10 @@
-const { updateOne } = require("../models/Product");
-const Stock = require("../models/Stock");
 const {
   getStockService,
   createStockService,
+  getStockByIdService,
 } = require("../services/stock.services");
 
-exports.getStock = async (req, res, next) => {
+exports.getStocks = async (req, res, next) => {
   try {
     let filters = { ...req.query };
     const excludedField = ["page", "limit", "sort"];
@@ -68,23 +67,24 @@ exports.createStock = async (req, res) => {
   }
 };
 
-// exports.updateStockById = async (req, res, next) => {
-//   try {
-//     const { id } = req.params;
-//     const result = await updateStockByIdService(id, req.body);
+exports.getStockById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await getStockByIdService(id);
 
-//     res.status(200).json({
-//       status: "success",
-//       message: "Product successfully updated",
-//     });
-//   } catch (error) {
-//     res.status(400).json({
-//       status: "fail",
-//       message: "Data cant update",
-//       error: error.message,
-//     });
-//   }
-// };
+    res.status(200).json({
+      status: "success",
+      message: "Stock successfully found",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "Data cant found",
+      error: error.message,
+    });
+  }
+};
 
 // exports.bulkUpdateStock = async (req, res, next) => {
 //   try {
