@@ -32,7 +32,6 @@ exports.signup = async (req, res, next) => {
 exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    console.log(email);
     if (!email || !password) {
       return res.status(401).json({
         status: "fail",
@@ -71,6 +70,21 @@ exports.login = async (req, res, next) => {
         user: others,
         token,
       },
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      error,
+    });
+  }
+};
+
+exports.getme = async (req, res) => {
+  try {
+    const user = await findUserByEmail(req.user?.email);
+    res.status(200).json({
+      status: "Success",
+      data: user,
     });
   } catch (error) {
     res.status(400).json({
